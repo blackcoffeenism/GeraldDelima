@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <style>
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: #fafafa;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            width: 100vw;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 56px;
+            width: 100%;
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 32px;
+        }
+        nav ul li a {
+            color: #222;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+        nav ul li a:hover {
+            border-bottom: 2px solid #222;
+        }
+        main {
+            flex: 1;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 80px;
+        }
+        .container {
+            background: #fff;
+            padding: 48px 40px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 0 auto;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 24px;
+            object-fit: cover;
+            border: 1px solid #eee;
+        }
+        h1 {
+            color: #222;
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        h2 {
+            color: #666;
+            font-size: 1.3rem;
+            margin-bottom: 24px;
+            font-weight: 400;
+        }
+        p {
+            color: #444;
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+        }
+        .actions {
+            margin-bottom: 24px;
+        }
+        .actions a {
+            display: inline-block;
+            background: #222;
+            color: #fff;
+            padding: 12px 32px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            margin-right: 12px;
+            transition: background 0.2s;
+        }
+        .actions a:last-child {
+            margin-right: 0;
+        }
+        .actions a:hover {
+            background: #444;
+        }
+        .social {
+            margin-top: 16px;
+        }
+        .social a {
+            color: #888;
+            text-decoration: none;
+            font-size: 1.5rem;
+            margin: 0 14px;
+            transition: color 0.2s;
+        }
+        .social a:hover {
+            color: #222;
+        }
+        #carousel {
+            min-height: 320px;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .carousel-item {
+            opacity: 0;
+            transition: opacity 0.5s;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+        .carousel-item.active {
+            opacity: 1;
+            position: relative;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(34,34,34,0.85);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+            transition: background 0.2s, transform 0.2s;
+            z-index: 2;
+        }
+        #prevBtn.carousel-btn {
+            left: -48px;
+        }
+        #nextBtn.carousel-btn {
+            right: -48px;
+        }
+        .carousel-btn:hover {
+            background: #222;
+            transform: translateY(-50%) scale(1.08);
+        }
+        @media (max-width: 900px) {
+            .container {
+                max-width: 98vw;
+                padding: 32px 8vw;
+            }
+            #carousel {
+                max-width: 98vw;
+            }
+        }
+        @media (max-width: 600px) {
+            header, nav, main {
+                width: 100vw;
+            }
+            .container {
+                padding: 18px 2vw;
+                min-height: 300px;
+            }
+            .avatar {
+                width: 80px;
+                height: 80px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            h2 {
+                font-size: 1rem;
+            }
+            p {
+                font-size: 0.95rem;
+            }
+            .actions a {
+                font-size: 0.95rem;
+                padding: 8px 16px;
+            }
+            .social a {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#contacts">Contacts</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+    <div class="container" id="home">
+        <img src="Delima-Gerald-2x2_picture.jpg" alt="Gerald Delima" class="avatar">
+        <h1>Gerald Delima</h1>
+        <h2>Web Developer & Designer</h2>
+        <p>
+            I build clean, user-focused web experiences.<br>
+            Front-end, UI/UX, and creative solutions.
+        </p>
+        <div class="actions">
+            <a href="#portfolio">Portfolio</a>
+            <a href="#contacts">Contact</a>
+        </div>
+    </div>
+
+    <!-- Contacts section with social links -->
+    <div class="container" id="contacts" style="display:none;">
+        <h1>Contact Me</h1>
+        <p style="margin-bottom: 24px; color: #555;">Let's connect! Choose your preferred platform below:</p>
+        <div class="contact-icons" style="display: flex; gap: 32px; justify-content: center; margin-bottom: 16px;">
+            <a href="https://www.linkedin.com/in/gerald-delima-90164527a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" title="LinkedIn" style="background: #f3f3f3; border-radius: 50%; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: background 0.2s; font-size: 2rem; color: #0077b5;"><span>&#xe800;</span><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.026-3.063-1.867-3.063-1.868 0-2.154 1.459-2.154 2.967v5.7h-3v-10h2.881v1.367h.041c.401-.761 1.379-1.563 2.838-1.563 3.036 0 3.6 2.001 3.6 4.601v5.595z" fill="#0077b5"/></svg></a>
+            <a href="https://github.com/blackcoffeenism/My-Projects/branches" target="_blank" title="GitHub" style="background: #f3f3f3; border-radius: 50%; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: background 0.2s; font-size: 2rem; color: #333;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.757-1.333-1.757-1.089-.745.083-.729.083-.729 1.205.084 1.84 1.236 1.84 1.236 1.07 1.834 2.809 1.304 3.495.997.108-.775.418-1.305.762-1.605-2.665-.305-5.466-1.334-5.466-5.93 0-1.31.469-2.381 1.236-3.221-.124-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.873.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.803 5.624-5.475 5.921.43.371.823 1.102.823 2.222v3.293c0 .322.218.694.825.576 4.765-1.585 8.199-6.082 8.199-11.385 0-6.627-5.373-12-12-12z" fill="#333"/></svg></a>
+            <a href="mailto:delimagerald9@gmail.com" title="Email" style="background: #f3f3f3; border-radius: 50%; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: background 0.2s; font-size: 2rem; color: #d44638;">&#9993;</a>
+            <a href="https://m.me/gerald.delima.520" target="_blank" title="Facebook" style="background: #f3f3f3; border-radius: 50%; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: background 0.2s; font-size: 2rem; color: #1877f3;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M24 12c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.991 4.388 10.954 10.125 11.854v-8.385h-3.047v-3.469h3.047v-2.635c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953h-1.513c-1.491 0-1.953.925-1.953 1.874v2.242h3.328l-.532 3.469h-2.796v8.385c5.737-.9 10.125-5.863 10.125-11.854z" fill="#1877f3"/></svg></a>
+            <a href="https://t.me/ALTL_Buck_Estate" target="_blank" title="Telegram" style="background: #f3f3f3; border-radius: 50%; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: background 0.2s; font-size: 2rem; color: #0088cc;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 0c-6.627 0-12 5.373-12 12 0 6.627 5.373 12 12 12s12-5.373 12-12c0-6.627-5.373-12-12-12zm5.93 7.297l-2.453 10.453c-.186.771-.678.957-1.373.594l-3.797-2.803-1.832-.883c-.4-.186-.409-.438.084-.576l.453-.139 7.125-2.998c.334-.139.646.084.523.523zm-8.453 7.453l1.453 1.084-1.453-.684v-.4zm2.084 1.523l3.084 2.271c.348.252.668.121.764-.323l.734-2.938-4.582 1.99z" fill="#0088cc"/></svg></a>
+        </div>
+        <p style="color: #888; font-size: 1rem;">Or email me directly at <a href="mailto:delimagerald9@gmail.com" style="color: #222; text-decoration: underline;">delimagerald9@gmail.com</a></p>
+    </div>
+
+        <!-- About section, only visible when navigating to #about -->
+        <div class="container" id="about" style="display:none;">
+                <h1>About Me</h1>
+                <p>
+                        Hello! I'm Gerald Delima, a Computer Engineer from Cavite State University.<br>
+                        My main programming language is Python, which I use for a variety of projects and problem solving.<br><br>
+                        I have a passion for music and enjoy playing instruments such as the ukulele and organ.<br><br>
+                        Professionally, I've worked as a Data Encoder and as a Graphics Designer/3D Illustrator, combining my technical and creative skills to deliver quality results.<br><br>
+                        I value continuous learning, creativity, and collaboration. Whether it's coding, designing, or making music, I love to explore new ideas and bring them to life.
+                </p>
+        </div>
+
+        <!-- Portfolio section with carousel -->
+        <div class="container" id="portfolio" style="display:none;">
+            <h1>Portfolio</h1>
+            <div id="carousel" style="position:relative;max-width:600px;margin:0 auto;">
+                <div class="carousel-item active">
+                    <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80" alt="Project 1" style="width:100%;border-radius:8px;">
+                    <h2 style="margin:12px 0 4px 0;">Project One</h2>
+                    <p style="color:#666;">A sample project description goes here.</p>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Project 2" style="width:100%;border-radius:8px;">
+                    <h2 style="margin:12px 0 4px 0;">Project Two</h2>
+                    <p style="color:#666;">Another example project for the carousel.</p>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80" alt="Project 3" style="width:100%;border-radius:8px;">
+                    <h2 style="margin:12px 0 4px 0;">Project Three</h2>
+                    <p style="color:#666;">A third placeholder project for your portfolio.</p>
+                </div>
+                <button id="prevBtn" class="carousel-btn" aria-label="Previous project">&#10094;</button>
+                <button id="nextBtn" class="carousel-btn" aria-label="Next project">&#10095;</button>
+            </div>
+        </div>
+    </main>
+    <script>
+      // Simple hash-based navigation for sections
+            function showSection() {
+                ['home', 'about', 'portfolio', 'contacts'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.style.display = 'none';
+                });
+                let hash = window.location.hash.replace('#', '');
+                if (!hash || !['home','about','portfolio','contacts'].includes(hash)) hash = 'home';
+                const section = document.getElementById(hash);
+                if (section) section.style.display = 'block';
+            }
+            window.addEventListener('hashchange', showSection);
+            window.addEventListener('DOMContentLoaded', showSection);
+
+                    // Simple carousel logic with fade animation
+                    document.addEventListener('DOMContentLoaded', function() {
+                        let current = 0;
+                        const items = document.querySelectorAll('#carousel .carousel-item');
+                        const prevBtn = document.getElementById('prevBtn');
+                        const nextBtn = document.getElementById('nextBtn');
+                        function showItem(idx) {
+                            items.forEach((item, i) => {
+                                item.classList.remove('active');
+                            });
+                            items[idx].classList.add('active');
+                        }
+                        if (prevBtn && nextBtn) {
+                            prevBtn.onclick = function() {
+                                current = (current - 1 + items.length) % items.length;
+                                showItem(current);
+                            };
+                            nextBtn.onclick = function() {
+                                current = (current + 1) % items.length;
+                                showItem(current);
+                            };
+                        }
+                        showItem(current);
+                    });
+    </script>
+</body>
+</html>
