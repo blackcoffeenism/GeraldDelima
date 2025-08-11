@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerald's Personal Website</title>
+    <style>
+        /* Animated background transition overlay */
+        #bg-transition {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            opacity: 0.8;
+            will-change: transform, background;
+            transition: transform 1s cubic-bezier(.77,0,.18,1), opacity 0.7s;
+        }
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: #fafafa;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            width: 100vw;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 56px;
+            width: 100%;
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 32px;
+        }
+        nav ul li a {
+            color: #222;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+        nav ul li a:hover {
+            border-bottom: 2px solid #222;
+        }
+        main {
+            flex: 1;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 80px;
+        }
+        .container {
+            background: #fff;
+            padding: 48px 40px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 0 auto;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 24px;
+            object-fit: cover;
+            border: 1px solid #eee;
+        }
+        h1 {
+            color: #222;
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        h2 {
+            color: #666;
+            font-size: 1.3rem;
+            margin-bottom: 24px;
+            font-weight: 400;
+        }
+        p {
+            color: #444;
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+        }
+        .actions {
+            margin-bottom: 24px;
+        }
+        .actions a {
+            display: inline-block;
+            background: #222;
+            color: #fff;
+            padding: 12px 32px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            margin-right: 12px;
+            transition: background 0.2s;
+        }
+        .actions a:last-child {
+            margin-right: 0;
+        }
+        .actions a:hover {
+            background: #444;
+        }
+        .social {
+            margin-top: 16px;
+        }
+        .social a {
+            color: #888;
+            text-decoration: none;
+            font-size: 1.5rem;
+            margin: 0 14px;
+            transition: color 0.2s;
+        }
+        .social a:hover {
+            color: #222;
+        }
+        #carousel {
+            min-height: 320px;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            overflow: visible;
+            perspective: 1200px;
+        }
+        .carousel-zone {
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 60%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            z-index: 10;
+            background: rgba(0,0,0,0);
+            pointer-events: auto;
+        }
+        #carousel-left-zone {
+            left: -18%;
+        }
+        #carousel-right-zone {
+            right: -18%;
+        }
+        .carousel-item {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.7);
+            opacity: 0;
+            filter: blur(4px) grayscale(30%);
+            z-index: 1;
+            transition: 
+                transform 0.6s cubic-bezier(.77,0,.18,1),
+                opacity 0.5s,
+                filter 0.5s;
+            width: 80%;
+            pointer-events: none;
+        }
+        .carousel-item.active {
+            opacity: 1;
+            filter: none;
+            transform: translate(-50%, -50%) scale(1);
+            z-index: 3;
+            pointer-events: auto;
+        }
+        .carousel-item.left {
+            opacity: 1;
+            filter: blur(6px) grayscale(50%);
+            transform: translate(-120%, -50%) scale(0.6) rotateY(18deg);
+            z-index: 2;
+        }
+        .carousel-item.right {
+            opacity: 1;
+            filter: blur(6px) grayscale(50%);
+            transform: translate(20%, -50%) scale(0.6) rotateY(-18deg);
+            z-index: 2;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(34,34,34,0.85);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+            transition: background 0.2s, transform 0.2s;
+            z-index: 2;
+        }
+        #prevBtn.carousel-btn {
+            left: -48px;
+        }
+        #nextBtn.carousel-btn {
+            right: -48px;
+        }
+        .carousel-btn:hover {
+            background: #222;
+            transform: translateY(-50%) scale(1.08);
+        }
+        @media (max-width: 900px) {
+            .container {
+                max-width: 98vw;
+                padding: 32px 8vw;
+            }
+            #carousel {
+                max-width: 98vw;
+            }
+        }
+        @media (max-width: 600px) {
+            header, nav, main {
+                width: 100vw;
+            }
+            .container {
+                padding: 18px 2vw;
+                min-height: 300px;
+            }
+            .avatar {
+                width: 80px;
+                height: 80px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            h2 {
+                font-size: 1rem;
+            }
+            p {
+                font-size: 0.95rem;
+            }
+            .actions a {
+                font-size: 0.95rem;
+                padding: 8px 16px;
+            }
+            .social a {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="bg-transition"></div>
+    <header style="position:relative; z-index:2;">
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#contacts">Contacts</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+    <div class="container" id="home">
+        <img src="Delima-Gerald-2x2_picture.jpg" alt="Gerald Delima" class="avatar">
+        <h1>Gerald Delima</h1>
+        <h2>Web Developer & Designer</h2>
+        <p>
+            I build clean, user-focused web experiences.<br>
+            Front-end, UI/UX, and creative solutions.
+        </p>
+        <div class="actions">
+            <a href="#portfolio">Portfolio</a>
+            <a href="#contacts">Contact</a>
+        </div>
+    </div>
+
+    <!-- Contacts section with social links -->
+    <div class="container" id="contacts" style="display:none;">
+        <h1>Contact Me</h1>
+        <p style="margin-bottom: 24px; color: #555;">Let's connect! Choose your preferred platform below:</p>
+        <div class="contact-icons" style="display: flex; gap: 32px; justify-content: center; margin-bottom: 16px;">
+            <a href="https://www.linkedin.com/in/gerald-delima-90164527a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" title="LinkedIn" style="background: #f3f3f3; border-radius: 50%; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: background 0.2s; font-size: 2rem; color: #0077b5;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.026-3.063-1.867-3.063-1.868 0-2.154 1.459-2.154 2.967v5.7h-3v-10h2.881v1.367h.041c.401-.761 1.379-1.563 2.838-1.563 3.036 0 3.6 2.001 3.6 4.601v5.595z" fill="#0077b5"/>
+                </svg>
+            </a>
+            <a href="https://github.com/blackcoffeenism/My-Projects/branches" target="_blank" title="GitHub" style="background: #f3f3f3; border-radius: 50%; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: background 0.2s; font-size: 2rem; color: #333;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.757-1.333-1.757-1.089-.745.083-.729.083-.729 1.205.084 1.84 1.236 1.84 1.236 1.07 1.834 2.809 1.304 3.495.997.108-.775.418-1.305.762-1.605-2.665-.305-5.466-1.334-5.466-5.93 0-1.31.469-2.381 1.236-3.221-.124-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.873.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.803 5.624-5.475 5.921.43.371.823 1.102.823 2.222v3.293c0 .322.218.694.825.576 4.765-1.585 8.199-6.082 8.199-11.385 0-6.627-5.373-12-12-12z" fill="#333"/></svg></a>
+            <a href="mailto:delimagerald9@gmail.com" title="Email" style="background: #f3f3f3; border-radius: 50%; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: background 0.2s; font-size: 2rem; color: #d44638;">&#9993;</a>
+            <a href="https://m.me/gerald.delima.520" target="_blank" title="Facebook" style="background: #f3f3f3; border-radius: 50%; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: background 0.2s; font-size: 2rem; color: #1877f3;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M24 12c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.991 4.388 10.954 10.125 11.854v-8.385h-3.047v-3.469h3.047v-2.635c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953h-1.513c-1.491 0-1.953.925-1.953 1.874v2.242h3.328l-.532 3.469h-2.796v8.385c5.737-.9 10.125-5.863 10.125-11.854z" fill="#1877f3"/></svg></a>
+                        <a href="https://t.me/ALTL_Buck_Estate" target="_blank" title="Telegram" style="background: #f3f3f3; border-radius: 50%; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: background 0.2s; font-size: 2rem; color: #0088cc;">
+                                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="14" cy="14" r="14" fill="#0088cc"/>
+                                    <path d="M20.5 8.5L7.5 13.5C6.83333 13.75 6.84167 14.1667 7.41667 14.3333L10.5 15.25L18.5 10.5C18.8333 10.3333 19.0833 10.4167 18.8333 10.6667L12.5 16.5V19.5C12.5 19.8333 12.6667 19.9167 12.9167 19.75L15.0833 18.0833L17.5 19C18.0833 19.1667 18.4167 18.9167 18.5833 18.3333L21 9.5C21.1667 8.91667 20.8333 8.66667 20.5 8.5Z" fill="white"/>
+                                </svg>
+                        </a>
+        </div>
+        <p style="color: #888; font-size: 1rem;">Or email me directly at <a href="mailto:delimagerald9@gmail.com" style="color: #222; text-decoration: underline;">delimagerald9@gmail.com</a></p>
+    </div>
+
+        <!-- About section, only visible when navigating to #about -->
+        <div class="container" id="about" style="display:none;">
+                <h1>About Me</h1>
+                <p>
+                        Hello! I'm Gerald Delima, a Computer Engineer from Cavite State University.<br>
+                        My main programming language is Python, which I use for a variety of projects and problem solving.<br><br>
+                        I have a passion for music and enjoy playing instruments such as the ukulele and organ.<br><br>
+                        Professionally, I've worked as a Data Encoder and as a Graphics Designer/3D Illustrator, combining my technical and creative skills to deliver quality results.<br><br>
+                        I value continuous learning, creativity, and collaboration. Whether it's coding, designing, or making music, I love to explore new ideas and bring them to life.
+                </p>
+        </div>
+
+        <!-- Portfolio section with carousel -->
+        <div class="container" id="portfolio" style="display:none;">
+            <h1></h1>
+            <div style="position:relative;max-width:600px;margin:0 auto;z-index:2;">
+                <div id="carousel" style="position:relative;max-width:600px;margin:0 auto;z-index:2;">
+                    <div class="carousel-item active">
+                        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80" alt="Project 1" style="width:100%;border-radius:8px;">
+                        <h2 style="margin:12px 0 4px 0;">Project One</h2>
+                        <p style="color:#666;">A sample project description goes here.</p>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Project 2" style="width:100%;border-radius:8px;">
+                        <h2 style="margin:12px 0 4px 0;">Project Two</h2>
+                        <p style="color:#666;">Another example project for the carousel.</p>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80" alt="Project 3" style="width:100%;border-radius:8px;">
+                        <h2 style="margin:12px 0 4px 0;">Project Three</h2>
+                        <p style="color:#666;">A third placeholder project for your portfolio.</p>
+                    </div>
+                </div>
+                <div id="carousel-left-zone" class="carousel-zone"></div>
+                <div id="carousel-right-zone" class="carousel-zone"></div>
+            </div>
+        </div>
+    </main>
+    <script>
+      // Simple hash-based navigation for sections
+            function showSection() {
+                ['home', 'about', 'portfolio', 'contacts'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.style.display = 'none';
+                });
+                let hash = window.location.hash.replace('#', '');
+                if (!hash || !['home','about','portfolio','contacts'].includes(hash)) hash = 'home';
+                const section = document.getElementById(hash);
+                if (section) section.style.display = 'block';
+            }
+            window.addEventListener('hashchange', showSection);
+            window.addEventListener('DOMContentLoaded', showSection);
+
+        // Enhanced carousel logic with animated left/right preview, swipe, click-to-move, and animated background
+        document.addEventListener('DOMContentLoaded', function() {
+            let current = 0;
+            const items = document.querySelectorAll('#carousel .carousel-item');
+            const carousel = document.getElementById('carousel');
+            const bgTransition = document.getElementById('bg-transition');
+            // Palette for each carousel item (customize as needed)
+            const palette = [
+                '#e3e6f3', // Project 1: soft blue
+                '#fbeee6', // Project 2: soft orange
+                '#e6f7f2'  // Project 3: soft teal
+            ];
+            // Animate background color from click point
+            function animateBackground(idx, x, y) {
+                const color = palette[idx] || '#fafafa';
+                // Remove any previous circle
+                bgTransition.innerHTML = '';
+                // Calculate max radius to cover viewport
+                const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+                const vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+                // Distance from click to farthest corner
+                const distances = [
+                    Math.hypot(x, y),
+                    Math.hypot(vw - x, y),
+                    Math.hypot(x, vh - y),
+                    Math.hypot(vw - x, vh - y)
+                ];
+                const maxR = Math.ceil(Math.max(...distances));
+                // Create circle
+                const circle = document.createElement('div');
+                circle.className = 'bg-circle';
+                circle.style.left = (x - 1) + 'px';
+                circle.style.top = (y - 1) + 'px';
+                circle.style.width = '2px';
+                circle.style.height = '2px';
+                circle.style.background = color;
+                bgTransition.appendChild(circle);
+                // Animate
+                requestAnimationFrame(() => {
+                    circle.style.transform = `scale(${maxR/1.5})`;
+                });
+                setTimeout(() => {
+                    document.body.style.background = color;
+                    circle.style.opacity = 0;
+                }, 900);
+                setTimeout(() => {
+                    bgTransition.innerHTML = '';
+                }, 1000);
+            }
+            function setBackground(idx, x, y) {
+                if (typeof x === 'number' && typeof y === 'number') {
+                    animateBackground(idx, x, y);
+                } else {
+                    document.body.style.background = palette[idx] || '#fafafa';
+                }
+            }
+            function showItem(idx, x, y) {
+                items.forEach((item, i) => {
+                    item.classList.remove('active', 'left', 'right');
+                });
+                items[idx].classList.add('active');
+                // Left (previous)
+                items[(idx - 1 + items.length) % items.length].classList.add('left');
+                // Right (next)
+                items[(idx + 1) % items.length].classList.add('right');
+                setBackground(idx, x, y);
+            }
+            // Click outside left/right zones to move
+            const leftZone = document.getElementById('carousel-left-zone');
+            const rightZone = document.getElementById('carousel-right-zone');
+            if (leftZone) {
+                leftZone.addEventListener('click', function(e) {
+                    // Only allow navigation if NOT clicking inside the active item
+                    const activeItem = items[current];
+                    // Get bounding rect of active item
+                    const rect = activeItem.getBoundingClientRect();
+                    // If click is inside the active item, do nothing
+                    if (
+                        e.clientX >= rect.left &&
+                        e.clientX <= rect.right &&
+                        e.clientY >= rect.top &&
+                        e.clientY <= rect.bottom
+                    ) return;
+                    current = (current - 1 + items.length) % items.length;
+                    showItem(current, e.clientX, e.clientY);
+                });
+            }
+            if (rightZone) {
+                rightZone.addEventListener('click', function(e) {
+                    // Only allow navigation if NOT clicking inside the active item
+                    const activeItem = items[current];
+                    const rect = activeItem.getBoundingClientRect();
+                    if (
+                        e.clientX >= rect.left &&
+                        e.clientX <= rect.right &&
+                        e.clientY >= rect.top &&
+                        e.clientY <= rect.bottom
+                    ) return;
+                    current = (current + 1) % items.length;
+                    showItem(current, e.clientX, e.clientY);
+                });
+            }
+            // Swipe support (touch and mouse drag)
+            let startX = null;
+            let isDragging = false;
+            let dragThreshold = 50;
+            // Touch events
+            carousel.addEventListener('touchstart', function(e) {
+                if (e.touches.length === 1) {
+                    startX = e.touches[0].clientX;
+                    isDragging = true;
+                }
+            });
+            carousel.addEventListener('touchmove', function(e) {
+                if (!isDragging || startX === null) return;
+                let dx = e.touches[0].clientX - startX;
+                if (Math.abs(dx) > dragThreshold) {
+                    let touch = e.touches[0];
+                    if (dx > 0) {
+                        current = (current - 1 + items.length) % items.length;
+                    } else {
+                        current = (current + 1) % items.length;
+                    }
+                    showItem(current, touch.clientX, touch.clientY);
+                    isDragging = false;
+                    startX = null;
+                }
+            });
+            carousel.addEventListener('touchend', function(e) {
+                isDragging = false;
+                startX = null;
+            });
+            // Mouse drag events
+            carousel.addEventListener('mousedown', function(e) {
+                startX = e.clientX;
+                isDragging = true;
+            });
+            carousel.addEventListener('mousemove', function(e) {
+                if (!isDragging || startX === null) return;
+                let dx = e.clientX - startX;
+                if (Math.abs(dx) > dragThreshold) {
+                    if (dx > 0) {
+                        current = (current - 1 + items.length) % items.length;
+                    } else {
+                        current = (current + 1) % items.length;
+                    }
+                    showItem(current, e.clientX, e.clientY);
+                    isDragging = false;
+                    startX = null;
+                }
+            });
+            document.addEventListener('mouseup', function(e) {
+                isDragging = false;
+                startX = null;
+            });
+            showItem(current);
+        });
+    </script>
+</body>
+</html>
