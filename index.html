@@ -282,10 +282,11 @@
             }
             #carousel {
                 min-height: 120px;
+                max-width: 100vw;
             }
             .carousel-item {
-                min-width: 120px;
-                max-width: 98vw;
+                max-width: 100vw;
+                min-width: unset;
             }
         }
     </style>
@@ -395,12 +396,16 @@
 
         // Enhanced carousel logic with animated left/right preview, swipe, click-to-move, and animated background
         document.addEventListener('DOMContentLoaded', function() {
-            // Prevent page scroll when swiping carousel
-            carousel.addEventListener('touchmove', function(e) {
-                if (isDragging) {
-                    e.preventDefault();
-                }
-            }, { passive: false });
+            // Prevent accidental horizontal scroll of the container on swipe
+            const container = document.querySelector('#portfolio .container');
+            if (container) {
+                container.addEventListener('touchstart', function(e) {
+                    container.style.overflowX = 'hidden';
+                });
+                container.addEventListener('touchend', function(e) {
+                    container.style.overflowX = '';
+                });
+            }
             let current = 0;
             const items = document.querySelectorAll('#carousel .carousel-item');
             const carousel = document.getElementById('carousel');
