@@ -395,6 +395,12 @@
 
         // Enhanced carousel logic with animated left/right preview, swipe, click-to-move, and animated background
         document.addEventListener('DOMContentLoaded', function() {
+            // Prevent page scroll when swiping carousel
+            carousel.addEventListener('touchmove', function(e) {
+                if (isDragging) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
             let current = 0;
             const items = document.querySelectorAll('#carousel .carousel-item');
             const carousel = document.getElementById('carousel');
