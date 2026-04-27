@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerald Delima - Computer Engineer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Work+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -55,6 +58,7 @@
                 transform: translateY(-100%);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -125,6 +129,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -161,9 +166,12 @@
         }
 
         @keyframes float {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translate(0, 0);
             }
+
             50% {
                 transform: translate(30px, -30px);
             }
@@ -267,6 +275,7 @@
             align-items: center;
             justify-content: center;
         }
+
         .work-item-image img {
             width: 100%;
             height: 100%;
@@ -299,6 +308,63 @@
         .work-item p {
             color: var(--color-subtle);
             font-weight: 300;
+            font-size: 0.95rem;
+        }
+
+        /* Sample Works Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 4rem;
+        }
+
+        .project-card {
+            background: var(--color-bg);
+            border: 1px solid var(--color-line);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .project-image {
+            width: 100%;
+            aspect-ratio: 16/10;
+            background: var(--color-line);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.05);
+        }
+
+        .project-info {
+            padding: 2.5rem;
+        }
+
+        .project-info h3 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+
+        .project-info p {
+            color: var(--color-subtle);
+            font-weight: 300;
+            line-height: 1.8;
             font-size: 0.95rem;
         }
 
@@ -384,8 +450,13 @@
                 gap: 3rem;
             }
 
-            .work-grid {
+            .work-grid,
+            .projects-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .project-info {
+                padding: 1.5rem;
             }
 
             .hero h1 {
@@ -414,12 +485,14 @@
         }
     </style>
 </head>
+
 <body>
     <nav>
         <div class="logo">Gerald Delima</div>
         <ul class="nav-links">
             <li><a href="#about">About</a></li>
             <li><a href="#work">Work</a></li>
+            <li><a href="#sample-works">Sample Works</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
@@ -436,9 +509,16 @@
         <h2 class="section-title reveal">About</h2>
         <div class="about-content">
             <div class="about-text reveal">
-                <p style="text-align: justify;">I'm a computer engineer from Cavite State University with a passion for building innovative digital solutions. My expertise spans across multiple domains of software development, bringing ideas to life through code.</p>
-                <p style="text-align: justify;">I specialize in mobile app development, website development, web app development, and AI automations. Whether it's crafting seamless mobile experiences, building responsive websites, developing robust web applications, or implementing intelligent automation solutions, I focus on delivering quality work that solves real problems.</p>
-                <p style="text-align: justify;">My approach combines technical expertise with creative problem-solving, ensuring that every project is not only functional but also delivers exceptional user experiences.</p>
+                <p style="text-align: justify;">I'm a computer engineer from Cavite State University with a passion for
+                    building innovative digital solutions. My expertise spans across multiple domains of software
+                    development, bringing ideas to life through code.</p>
+                <p style="text-align: justify;">I specialize in mobile app development, website development, web app
+                    development, and AI automations. Whether it's crafting seamless mobile experiences, building
+                    responsive websites, developing robust web applications, or implementing intelligent automation
+                    solutions, I focus on delivering quality work that solves real problems.</p>
+                <p style="text-align: justify;">My approach combines technical expertise with creative problem-solving,
+                    ensuring that every project is not only functional but also delivers exceptional user experiences.
+                </p>
             </div>
             <div class="about-image reveal">
                 <img src="assets/profile.jpg" alt="Profile portrait">
@@ -473,6 +553,74 @@
         </div>
     </section>
 
+    <section id="sample-works">
+        <h2 class="section-title reveal">Sample Works</h2>
+        <div class="projects-grid">
+            <div class="project-card reveal">
+                <div class="project-image">
+                    <img src="assets/vhbc_sales_portal.png" alt="VHBC Sales Portal">
+                </div>
+                <div class="project-info">
+                    <h3>VHBC Sales Portal</h3>
+                    <p>A dynamic real estate sales portal featuring interactive full-screen maps, project-specific
+                        assets, and phase-based pricing management systems.</p>
+                </div>
+            </div>
+            <div class="project-card reveal">
+                <div class="project-image">
+                    <img src="assets/vhbc_referrer.png" alt="VHBC Referrer System">
+                </div>
+                <div class="project-info">
+                    <h3>VHBC Referrer System</h3>
+                    <p>A comprehensive scheduling and client tracking platform with customized timezone selection,
+                        conflict detection, and a robust leaderboard system.</p>
+                </div>
+            </div>
+            <div class="project-card reveal">
+                <div class="project-image"
+                    style="background-color: transparent; display: flex; justify-content: center; gap: 1rem; padding: 1.5rem;">
+                    <img src="assets/vhbc_App.png" alt="VHBC App Screen 1"
+                        style="width: auto; height: 100%; object-fit: contain;">
+                    <img src="assets/vhbc_App2.png" alt="VHBC App Screen 2"
+                        style="width: auto; height: 100%; object-fit: contain;">
+                </div>
+                <div class="project-info">
+                    <h3>VHBC App</h3>
+                    <p>A comprehensive mobile application designed to complement the VHBC real estate ecosystem,
+                        providing seamless access to essential features on the go.</p>
+                </div>
+            </div>
+            <div class="project-card reveal">
+                <div class="project-image"
+                    style="background-color: transparent; padding: 2.5rem; display: flex; align-items: center; justify-content: center;">
+                    <img src="assets/ai.jpg" alt="Facebook Page AI" style="object-fit: contain; max-height: 100%;">
+                </div>
+                <div class="project-info">
+                    <h3>Facebook Page AI - n8n Automation</h3>
+                    <p>An intelligent system for automated Facebook page posting and responsive chatbot interactions
+                        powered by n8n.</p>
+                    <a href="https://www.facebook.com/profile.php?id=61586076160887" target="_blank"
+                        style="display: inline-block; margin-top: 1rem; color: var(--color-accent); font-weight: 500; text-decoration: none; border-bottom: 1px solid var(--color-accent); padding-bottom: 2px; transition: opacity 0.3s;"
+                        onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Try and test it here
+                        &rarr;</a>
+                </div>
+            </div>
+            <div class="project-card reveal">
+                <div class="project-image"
+                    style="background-color: transparent; padding: 2.5rem; display: flex; align-items: center; justify-content: center;">
+                    <img src="assets/ai.jpg" alt="GoHighLevel Automation" style="object-fit: contain; max-height: 100%;">
+                </div>
+                <div class="project-info">
+                    <h3>GoHighLevel Automation - AI Caller</h3>
+                    <p>An advanced AI inbound and outbound caller system integrated with GoHighLevel to automate client communication and appointment scheduling.</p>
+                    <a href="https://buildfocusdigital.com/" target="_blank"
+                        style="display: inline-block; margin-top: 1rem; color: var(--color-accent); font-weight: 500; text-decoration: none; border-bottom: 1px solid var(--color-accent); padding-bottom: 2px; transition: opacity 0.3s;"
+                        onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Test it by booking a demo call &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="contact">
         <h2 class="section-title reveal">Get in Touch</h2>
         <div class="contact-content reveal">
@@ -493,18 +641,18 @@
     <script>
         // Scroll reveal animation
         const reveals = document.querySelectorAll('.reveal');
-        
+
         const revealOnScroll = () => {
             reveals.forEach(element => {
                 const elementTop = element.getBoundingClientRect().top;
                 const elementVisible = 150;
-                
+
                 if (elementTop < window.innerHeight - elementVisible) {
                     element.classList.add('active');
                 }
             });
         };
-        
+
         window.addEventListener('scroll', revealOnScroll);
         revealOnScroll(); // Initial check
 
@@ -523,5 +671,5 @@
         });
     </script>
 </body>
-</html>
 
+</html>
